@@ -1,0 +1,114 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Mar 21 09:16:44 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> create user qt231 identified by qt231;
+SP2-0640: Not connected
+SQL> connect / as sysdba;
+Connected.
+SQL> create user qt231 identified by qt231;
+
+User created.
+
+SQL> connect qt231;
+Enter password:
+ERROR:
+ORA-01045: user QT231 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect / as sysdba;
+Connected.
+SQL> grant all privileges to qt231;
+
+Grant succeeded.
+
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> connect / as sysdba;
+Connected.
+SQL> revoke all privileges from qt231;
+
+Revoke succeeded.
+
+SQL> connect qt231;
+Enter password:
+ERROR:
+ORA-01045: user QT231 lacks CREATE SESSION privilege; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect / as sysdba;
+Connected.
+SQL> grant all privileges to qt231;
+
+Grant succeeded.
+
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> connect qt231;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> connect qt235;
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> select * from tab;
+
+no rows selected
+
+SQL> select table_name from user_tables;
+
+no rows selected
+
+SQL> create table student1(htno number(5)
+  2
+SQL> create table student1(htno number(5),sname varchar2(10),age number(3),marks number(3));
+
+Table created.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+------------------------------
+STUDENT1
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT1                       TABLE
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+
+SQL>

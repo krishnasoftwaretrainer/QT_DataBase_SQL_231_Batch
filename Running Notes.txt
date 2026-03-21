@@ -1,0 +1,83 @@
+DataBase:Software[OracleDB]:Modern 
+--------Queries[Question]:SQL 
+Collection of Data ot Information.
+Student Emp Customers.
+
+Table's:Collection of Rows and Columns.
+		Collection of Records.
+Data:Raw Facts.
+
+Krishna
+Hyd 
+
+Information:Processed Data:100
+Employee DataBase:100 Records[Row][Search]
+Trainer QT Krishna 	Selenium
+Trainer QT Shiva 	Adv Java 
+
+Query:
+select * from TrainerDetails where tname="David";
+select * from TrainerDetails;
+
+CRUD:Create Store Retrive[Select] Update Delete
+
+Traditional DataBase:Books/Papers 
+
+Cloud DataBase:Online[WireLess]
+LAN:Wired 
+Wifi:WireLess:Cloud
+
+Client[Users]-Server[DataBase][Cloud][Amazon]:
+100%:Amazon Zomato SBI Zoom etc...
+Secure SBI:
+
+DBMS:DataBase Management System:OracleDB
+RDBMS:Relational DataBase Management System
+
+School		College		Company 
+Student		Student		Employee		
+Krishna		Krishna		Krishna
+===================================
+
+Download and Install OracleDB:
+--------------
+21c 11g 
+
+https://www.oracle.com/database/technologies/xe-prior-release-downloads.html
+
+DDL:Data Defination Language
+Create:
+Alter:
+Truncate:
+Drop:
+
+DML:Data Manipulation Language
+Insert:
+Update:
+Select:
+Delete:
+
+DCL:Data Control Language[DBA]
+Create DataBase
+Grant:SQL> grant all privileges to qt231;
+Revoke:SQL> revoke all privileges from qt231;
+
+TCL:Transaction Control Language
+Commit:
+RollBack:
+SavePoint:
+
+DataBase:DBA 
+
+DataBase Tables:
+DataBase:College[User]
+Table/s:Student Lecturers Library Transport etc..
+
+Create User/DataBase:sysdba
+Syntax:Create user username identified by password;
+Ex: create user qt231 identified by qt231
+SQL> grant all privileges to qt231;
+
+Create:Create table tablename(Column1 datatype(size) ,Coulmn2 datatype(size),......);
+
+12345(5) 54687 54622154
