@@ -81,3 +81,50 @@ SQL> grant all privileges to qt231;
 Create:Create table tablename(Column1 datatype(size) ,Coulmn2 datatype(size),......);
 
 12345(5) 54687 54622154
+=========================================
+Alter:
+-----
+alter table student1 add Percentage number(5,2)
+
+DataTypes:
+--------
+1.Number:
+Plain Numbers:sid number(5)
+Point Values:Percentage number(5,2)
+Precession:Total Num of digits.
+Scale:Max num of digits after decimal 
+5-2=3
+999.99 
+99.999
+9.9999
+9999.9 x
+
+2.Char:
+---------
+char:sname char(20bytes)->Krishna->7bytes[13bytes]
+varchar[2k]:varchar subject(20bytes)->Testing->7bytes
+varchar2:4k
+5k:3k:2k:Char    ->5k:4k:
+5k:2k:3K:VarChar ->30K:4k:26k
+
+3.date:
+-------
+date("DD/MM/YY)
+date('10-APR-96');
+
+Create New table by using existing database table.
+Syntax:create table new_tablename as select * from existing database table;
+Example:create table stu as select * from student;
+
+DML:Data Manipulation Language
+Insert:
+Syntax:insert into tablename values(01,"Krishna","11/02/26');
+
+Update:
+------
+Syntax:update student set sname='Krish' where rollnum=101;
+
+Select:
+-------
+Syntax: Select * from tablename;
+		Select Column1,Column2 from tablename;

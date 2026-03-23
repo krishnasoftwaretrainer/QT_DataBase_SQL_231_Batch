@@ -112,3 +112,704 @@ SQL> desc student1;
  MARKS                                              NUMBER(3)
 
 SQL>
+=========================
+
+SQL*Plus: Release 11.2.0.2.0 Production on Mon Mar 23 09:09:05 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT1                       TABLE
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+
+SQL> select * from student1;
+
+no rows selected
+
+SQL> alter table student1 add Percentage number(5,2);
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(10)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+
+SQL> alter table student1 modify sname varchar(20);
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              VARCHAR2(20)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+
+SQL> alter table student1 modify sname char(20);
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+
+SQL> alter table student1 add date;
+alter table student1 add date
+                         *
+ERROR at line 1:
+ORA-00904: : invalid identifier
+
+
+SQL> alter table student1 add dob(date);
+alter table student1 add dob(date)
+                            *
+ERROR at line 1:
+ORA-00902: invalid datatype
+
+
+SQL> alter table student1 add dob date;
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ MARKS                                              NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> alter table student1 drop column marks;
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HTNO                                               NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> alter table student1 rename column htno to rollnum;
+
+Table altered.
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> rename student1 to student;
+
+Table renamed.
+
+SQL> desc student1;
+ERROR:
+ORA-04043: object student1 does not exist
+
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> create table stu as select * from student;
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> desc stu;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> create table stu1 as select sanme,age,dob from student;
+create table stu1 as select sanme,age,dob from student
+                            *
+ERROR at line 1:
+ORA-00904: "SANME": invalid identifier
+
+
+SQL> create table stu1 as select sname,age,dob from student;
+
+Table created.
+
+SQL> desc stu1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ DOB                                                DATE
+
+SQL> select * from student;
+
+no rows selected
+
+SQL> select * from stu;
+
+no rows selected
+
+SQL> select * from stu1;
+
+no rows selected
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ DOB                                                DATE
+
+SQL> insert into student values(101,"Krishna",25,99.99,"10/11/90");
+insert into student values(101,"Krishna",25,99.99,"10/11/90")
+                                                  *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'10/11/90');
+insert into student values(101,'Krishna',25,99.99,'10/11/90')
+                                                  *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'10-11-96');
+insert into student values(101,'Krishna',25,99.99,'10-11-96')
+                                                  *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'25-10-96');
+insert into student values(101,'Krishna',25,99.99,'25-10-96')
+                                                  *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'05-10-96');
+insert into student values(101,'Krishna',25,99.99,'05-10-96')
+                                                  *
+ERROR at line 1:
+ORA-01843: not a valid month
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'10-JUL-96';
+insert into student values(101,'Krishna',25,99.99,'10-JUL-96'
+                                                            *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> insert into student values(101,'Krishna',25,99.99,'10-JUL-96');
+
+1 row created.
+
+SQL> select * from stu1;
+
+no rows selected
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+
+SQL> insert into student values(102,'Ramesh',33,88.86,'25-DeC-96');
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+
+SQL> insert into student values(102,'Ramesh',33,88.86);
+insert into student values(102,'Ramesh',33,88.86)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into student(rollnum,sname,percentage) values(103,'Suman',77.93);
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+
+SQL> insert into student values(&rollnum,&sname,&age,&percentage,&dob);
+Enter value for rollnum: 104
+Enter value for sname: 'Ramesh'
+Enter value for age: 55
+Enter value for percentage: 55
+Enter value for dob: '14-feb-26'
+old   1: insert into student values(&rollnum,&sname,&age,&percentage,&dob)
+new   1: insert into student values(104,'Ramesh',55,55,'14-feb-26')
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> /
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> insert into student values(&rollnum,&sname,&age,&percentage,&dob);
+Enter value for rollnum: 105
+Enter value for sname: 'Murali'
+Enter value for age: 44
+Enter value for percentage: 66.66
+Enter value for dob: '14-feb-26'
+old   1: insert into student values(&rollnum,&sname,&age,&percentage,&dob)
+new   1: insert into student values(105,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> /
+Enter value for rollnum: 105
+Enter value for sname: 'Murali'
+Enter value for age: 44
+Enter value for percentage: 66.66
+Enter value for dob: '14-feb-26'
+old   1: insert into student values(&rollnum,&sname,&age,&percentage,&dob)
+new   1: insert into student values(105,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+
+6 rows selected.
+
+SQL> insert into student values(&&rollnum,&&sname,&&age,&&percentage,&&dob);
+Enter value for rollnum: 106
+Enter value for sname: 'Murali'
+Enter value for age: 44
+Enter value for percentage: 66.66
+Enter value for dob: '14-feb-26'
+old   1: insert into student values(&&rollnum,&&sname,&&age,&&percentage,&&dob)
+new   1: insert into student values(106,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> //
+old   1: insert into student values(&&rollnum,&&sname,&&age,&&percentage,&&dob)
+new   1: insert into student values(106,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> //
+old   1: insert into student values(&&rollnum,&&sname,&&age,&&percentage,&&dob)
+new   1: insert into student values(106,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> //
+old   1: insert into student values(&&rollnum,&&sname,&&age,&&percentage,&&dob)
+new   1: insert into student values(106,'Murali',44,66.66,'14-feb-26')
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update student set sname='Krish';
+
+10 rows updated.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krish                        25      99.99 10-JUL-96
+       102 Krish                        33      88.86 25-DEC-96
+       103 Krish                                77.93
+       104 Krish                        55         55 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       106 Krish                        44      66.66 14-FEB-26
+       106 Krish                        44      66.66 14-FEB-26
+       106 Krish                        44      66.66 14-FEB-26
+       106 Krish                        44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+       105 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> update student set sname='Krish' where rollnum=105;
+
+2 rows updated.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+       106 Murali                       44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> update student set sname='Mahesh' where sanme='murali';
+update student set sname='Mahesh' where sanme='murali'
+                                        *
+ERROR at line 1:
+ORA-00904: "SANME": invalid identifier
+
+
+SQL> update student set sname='Mahesh' where sname='murali';
+
+0 rows updated.
+
+SQL> updATE student set sname='Mahesh' where sname='Murali';
+
+4 rows updated.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> select rollnum,sname,age from student;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman
+       104 Ramesh                       55
+       105 Krish                        44
+       105 Krish                        44
+       106 Mahesh                       44
+       106 Mahesh                       44
+       106 Mahesh                       44
+       106 Mahesh                       44
+
+10 rows selected.
+
+SQL> select sname from student;
+
+SNAME
+--------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Krish
+Krish
+Mahesh
+Mahesh
+Mahesh
+Mahesh
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete from student;
+
+10 rows deleted.
+
+SQL> select sname from student;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select sname from student;
+
+SNAME
+--------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Krish
+Krish
+Mahesh
+Mahesh
+Mahesh
+Mahesh
+
+10 rows selected.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+       106 Mahesh                       44      66.66 14-FEB-26
+
+10 rows selected.
+
+SQL> delete from student where sname='Mahesh';
+
+4 rows deleted.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+       105 Krish                        44      66.66 14-FEB-26
+
+6 rows selected.
+
+SQL> delete from student where sname='Krish';
+
+2 rows deleted.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                                77.93
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> update student set age=44,dob='01-may-00' where sname='Suman'
+  2  ;
+
+1 row updated.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> insert into student values(105,'Mohan',66,66.66,'30-sep-02');
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STU                            TABLE
+STU1                           TABLE
+STUDENT                        TABLE
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from stu;
+
+no rows selected
+
+SQL> select * from stu1;
+
+no rows selected
+
+SQL> create table stu2 as select * from student;
+
+Table created.
+
+SQL> select * from stu2;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> create table stu3 as select rollnum,sname,percentage from student;
+
+Table created.
+
+SQL> select * from stu3;
+
+   ROLLNUM SNAME                PERCENTAGE
+---------- -------------------- ----------
+       101 Krishna                   99.99
+       102 Ramesh                    88.86
+       103 Suman                     77.93
+       104 Ramesh                       55
+       105 Mohan                     66.66
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STU                            TABLE
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STUDENT                        TABLE
+
+SQL>
