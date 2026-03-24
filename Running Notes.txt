@@ -128,3 +128,17 @@ Select:
 -------
 Syntax: Select * from tablename;
 		Select Column1,Column2 from tablename;
+=======
+
+Delete	Truncate	Drop	
+------------------------
+TCL:
+----
+Commit;
+RollBack;
+SavePoint;
+
+DDL:Create Alter Rename:Auto Save 
+DML:Insert Select Update:
+Commit;
+

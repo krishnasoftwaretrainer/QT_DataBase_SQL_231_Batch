@@ -813,3 +813,1063 @@ STU3                           TABLE
 STUDENT                        TABLE
 
 SQL>
+==========================
+24-3-2026
+-----------
+
+SQL> connect qt231;
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STU                            TABLE
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STUDENT                        TABLE
+
+SQL> select * from stu;
+
+no rows selected
+
+SQL> select * from stu1;
+
+no rows selected
+
+SQL> select * from stu2;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from stu3;
+
+   ROLLNUM SNAME                PERCENTAGE
+---------- -------------------- ----------
+       101 Krishna                   99.99
+       102 Ramesh                    88.86
+       103 Suman                     77.93
+       104 Ramesh                       55
+       105 Mohan                     66.66
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete table student;
+delete table student
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> delete student;
+
+5 rows deleted.
+
+SQL> select * from student;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete student where rollnum=101 or 102;
+delete student where rollnum=101 or 102
+                                      *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> delete student where rollnum=101;
+
+1 row deleted.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from stu3;
+
+   ROLLNUM SNAME                PERCENTAGE
+---------- -------------------- ----------
+       101 Krishna                   99.99
+       102 Ramesh                    88.86
+       103 Suman                     77.93
+       104 Ramesh                       55
+       105 Mohan                     66.66
+
+SQL> truncate table stu3;
+
+Table truncated.
+
+SQL> select * from stu3;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from stu3;
+
+no rows selected
+
+SQL> desc stu3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ PERCENTAGE                                         NUMBER(5,2)
+
+SQL> select * from stu3;
+
+no rows selected
+
+SQL> select * from stu2;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> drop stu2;
+drop stu2
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table stu2;
+
+Table dropped.
+
+SQL> select * from stu2;
+select * from stu2
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> desc stu2;
+ERROR:
+ORA-04043: object stu2 does not exist
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STU                            TABLE
+STU1                           TABLE
+STU3                           TABLE
+STUDENT                        TABLE
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from stu2;
+select * from stu2
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STU                            TABLE
+STU1                           TABLE
+STU3                           TABLE
+STUDENT                        TABLE
+
+SQL> drop table stu;
+
+Table dropped.
+
+SQL> drop table stu1;
+
+Table dropped.
+
+SQL> drop table stu3;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT                        TABLE
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> create table s1 as select roolnum,sname,age from student;
+create table s1 as select roolnum,sname,age from student
+                          *
+ERROR at line 1:
+ORA-00904: "ROOLNUM": invalid identifier
+
+
+SQL> create table s1 as select rollnum,sname,age from student;
+
+Table created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+
+SQL> insert into s1 values(111,'safa',456);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+
+SQL> commit;
+
+Commit complete.
+
+SQL> insert into s1 values(111,'safa',456);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> insert into s1 values(222,'safa',456);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+       222 safa                        456
+
+7 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+
+SQL> insert into s1 values(111,'safa',456);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> insert into s1 values(333,'safa',456);
+
+1 row created.
+
+SQL> insert into s1 values(222,'safa',456);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+       333 safa                        456
+
+8 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       111 safa                        456
+
+6 rows selected.
+
+SQL> insert into s1 values(222,'safa',456);
+
+1 row created.
+
+SQL> insert into s1 values(333,'safa',456);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+       333 safa                        456
+
+8 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+       333 safa                        456
+
+8 rows selected.
+
+SQL> delete s1 where rollnum=333;
+
+1 row deleted.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+       333 safa                        456
+
+8 rows selected.
+
+SQL> delete s1 where rollnum=333;
+
+1 row deleted.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+
+7 rows selected.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+
+7 rows selected.
+
+SQL>
+SQL> create table s2(sid number(3) primary key,sname varchar2(10));
+
+Table created.
+
+SQL> desc s2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL NUMBER(3)
+ SNAME                                              VARCHAR2(10)
+
+SQL> insert into s2 values(1,'Krishna');
+
+1 row created.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+
+SQL> insert into s2 values(1,'Krishna');
+insert into s2 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT231.SYS_C007324) violated
+
+
+SQL> insert into s2 values(2,'Krishna');
+
+1 row created.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+
+SQL> insert into s2 sname values('ajsdaj');
+insert into s2 sname values('ajsdaj')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into s2 sid,sname values(2,'ajsdaj');
+insert into s2 sid,sname values(2,'ajsdaj')
+                  *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword
+
+
+SQL> insert into sid,sname s2 values(2,'ajsdaj');
+insert into sid,sname s2 values(2,'ajsdaj')
+               *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword
+
+
+SQL> insert into s2 (sid,sname) values(2,'ajsdaj');
+insert into s2 (sid,sname) values(2,'ajsdaj')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT231.SYS_C007324) violated
+
+
+SQL> insert into s2 (sname) values('ajsdaj');
+insert into s2 (sname) values('ajsdaj')
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("QT231"."S2"."SID")
+
+
+SQL> create table s3(sid number(3) unique,sname varchar(10));
+
+Table created.
+
+SQL> desc s3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(3)
+ SNAME                                              VARCHAR2(10)
+
+SQL> insert into s3 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into s3 values(1,'Krishna');
+insert into s3 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT231.SYS_C007325) violated
+
+
+SQL> select * from s3;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+
+SQL> insert into s3(sname) values('adbvfvhdj);
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into s3(sname) values('adbvfvhdj');
+
+1 row created.
+
+SQL> select * from s3;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+           adbvfvhdj
+
+SQL> create table s4(sid number(3) not null,sname varchar(10));
+
+Table created.
+
+SQL> insert into s4 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into s4 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into s4 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into s4 values(1,'Krishna');
+
+1 row created.
+
+SQL> select * from s4;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         1 Krishna
+         1 Krishna
+         1 Krishna
+
+SQL> insert into s4(sname) values('adads');
+insert into s4(sname) values('adads')
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("QT231"."S4"."SID")
+
+
+SQL> create table s4(sid number(3) not null,sname varchar(10),fee number(5) default 15000;
+create table s4(sid number(3) not null,sname varchar(10),fee number(5) default 15000
+                                                                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table s4(sid number(3) not null,sname varchar(10),fee number(5) default 15000);
+create table s4(sid number(3) not null,sname varchar(10),fee number(5) default 15000)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table s5(sid number(3) not null,sname varchar(10),fee number(5) default 15000);
+
+Table created.
+
+SQL> desc s5;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL NUMBER(3)
+ SNAME                                              VARCHAR2(10)
+ FEE                                                NUMBER(5)
+
+SQL> insert into s5(sid,sname) values(101,'Krishna');
+
+1 row created.
+
+SQL> select * from s5;
+
+       SID SNAME             FEE
+---------- ---------- ----------
+       101 Krishna         15000
+
+SQL> insert into s5(sid,sname) values(102,'Suresh');
+
+1 row created.
+
+SQL> insert into s5(sid,sname) values(103,'Mahesh');
+
+1 row created.
+
+SQL> select * from s5;
+
+       SID SNAME             FEE
+---------- ---------- ----------
+       101 Krishna         15000
+       102 Suresh          15000
+       103 Mahesh          15000
+
+SQL> create table s6(sid number(3) not null,sname varchar(10),fee number(5) check>=5000;
+create table s6(sid number(3) not null,sname varchar(10),fee number(5) check>=5000
+                                                                            *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table s6(sid number(3) not null,sname varchar(10),fee number(5) check>=5000);
+create table s6(sid number(3) not null,sname varchar(10),fee number(5) check>=5000)
+                                                                            *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table s6(sid number(3) not null,sname varchar(10),fee number(5) (check>=5000));
+create table s6(sid number(3) not null,sname varchar(10),fee number(5) (check>=5000))
+                                                                       *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table s6(sid number(3) not null,sname varchar(10),fee number(5) check (fee>=5000));
+
+Table created.
+
+SQL> desc s6;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                       NOT NULL NUMBER(3)
+ SNAME                                              VARCHAR2(10)
+ FEE                                                NUMBER(5)
+
+SQL> insert into s6 values(101,'Krishna',6000);
+
+1 row created.
+
+SQL> select * from s6;
+
+       SID SNAME             FEE
+---------- ---------- ----------
+       101 Krishna          6000
+
+SQL> insert into s6 values(101,'Krishna',4000);
+insert into s6 values(101,'Krishna',4000)
+*
+ERROR at line 1:
+ORA-02290: check constraint (QT231.SYS_C007329) violated
+
+
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL> select 2+3 from dual;
+
+       2+3
+----------
+         5
+
+SQL> select 2+3 from s6;
+
+       2+3
+----------
+         5
+
+SQL> select 2+3 from s3;
+
+       2+3
+----------
+         5
+         5
+
+SQL> select 2+3 from dual;
+
+       2+3
+----------
+         5
+
+SQL> select 2+3 Addition from dual;
+
+  ADDITION
+----------
+         5
+
+SQL> select 2+3+6 Addition from dual;
+
+  ADDITION
+----------
+        11
+
+SQL> select 2+3-6 Addition from dual;
+
+  ADDITION
+----------
+        -1
+
+SQL> select 3+5*6/4-10 BODMAS from dual;
+
+    BODMAS
+----------
+        .5
+
+SQL> select 3+5*6+5-10 BODMAS from dual;
+
+    BODMAS
+----------
+        28
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where age=33;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       102 Ramesh                       33      88.86 25-DEC-96
+
+SQL> select * from student where age!=33;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where age<>33;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage>=60;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage>=66.66;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage>66.66;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+
+SQL> select * from student where percentage<66.66;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> select * from student where percentage<=66.66;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage>=66.66 and percentage<=99;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage>=66.66 or percentage<=99;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage is not null;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL>
+SQL> select * from s3;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+           adbvfvhdj
+
+SQL> select * from s3 where sname is not null;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+           adbvfvhdj
+
+SQL> select * from s3 where sid is not null;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where percentage in(25,55);
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> select * from student where age in(25,55);
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> select * from student where age in(23,55);
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL> select * from student where age between 23 and 55;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+
+SQL>
