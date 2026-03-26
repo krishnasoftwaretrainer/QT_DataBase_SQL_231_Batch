@@ -1873,3 +1873,1369 @@ SQL> select * from student where age between 23 and 55;
        104 Ramesh                       55         55 14-FEB-26
 
 SQL>
+===============================
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Mar 26 09:07:36 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt231
+Enter password:
+Connected.
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+STUDENT                        TABLE
+
+7 rows selected.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select sum(age) from student;
+
+  SUM(AGE)
+----------
+       223
+
+SQL> create table products(pid number(3),prod_name varchar2(20),prod_price number(6));
+
+Table created.
+
+SQL> desc products;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PID                                                NUMBER(3)
+ PROD_NAME                                          VARCHAR2(20)
+ PROD_PRICE                                         NUMBER(6)
+
+SQL> insert into products values(111,'Laptap',65000);
+
+1 row created.
+
+SQL> insert into products values(112,'TV',35000);
+
+1 row created.
+
+SQL> insert into products values(113,'Moblie',25000);
+
+1 row created.
+
+SQL> insert into products values(114,'AC',45000);
+
+1 row created.
+
+SQL> insert into products values(115,'ipod',15000);
+
+1 row created.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 Moblie                    25000
+       114 AC                        45000
+       115 ipod                      15000
+
+SQL> select sum(prod_price) from products;
+
+SUM(PROD_PRICE)
+---------------
+         185000
+
+SQL> select max(prod_price) from products;
+
+MAX(PROD_PRICE)
+---------------
+          65000
+
+SQL> select min(prod_price) from products;
+
+MIN(PROD_PRICE)
+---------------
+          15000
+
+SQL> select avg(prod_price) from products;
+
+AVG(PROD_PRICE)
+---------------
+          37000
+
+SQL> select count(prod_price) from products;
+
+COUNT(PROD_PRICE)
+-----------------
+                5
+
+SQL> select count(*) from products;
+
+  COUNT(*)
+----------
+         5
+
+SQL> insert into (pid,prod_name) values(116,'dfds');
+insert into (pid,prod_name) values(116,'dfds')
+             *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into products(pid,prod_name) values(116,'dfds');
+
+1 row created.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 Moblie                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 dfds
+
+6 rows selected.
+
+SQL> select count(prod_price) from products;
+
+COUNT(PROD_PRICE)
+-----------------
+                5
+
+SQL> select count(*) from products;
+
+  COUNT(*)
+----------
+         6
+
+SQL> update table products set sname='PC' where pid=116;
+update table products set sname='PC' where pid=116
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update products set sname='PC' where pid=116;
+update products set sname='PC' where pid=116
+                    *
+ERROR at line 1:
+ORA-00904: "SNAME": invalid identifier
+
+
+SQL> update products set prod_name='PC' where pid=116;
+
+1 row updated.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 Moblie                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+
+6 rows selected.
+
+SQL> SELECT COUNT(DISTINCT pid) FROM products;
+
+COUNT(DISTINCTPID)
+------------------
+                 6
+
+SQL> insert into products(pid,prod_name) values(116,'dfds');
+
+1 row created.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 Moblie                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+
+7 rows selected.
+
+SQL> SELECT COUNT(DISTINCT pid) FROM products;
+
+COUNT(DISTINCTPID)
+------------------
+                 6
+
+SQL> SELECT COUNT(pid) FROM products;
+
+COUNT(PID)
+----------
+         7
+
+SQL> select pid,prod_name, upper(prod_name) from products;
+
+       PID PROD_NAME            UPPER(PROD_NAME)
+---------- -------------------- --------------------
+       111 Laptap               LAPTAP
+       112 TV                   TV
+       113 Moblie               MOBLIE
+       114 AC                   AC
+       115 ipod                 IPOD
+       116 PC                   PC
+       116 dfds                 DFDS
+
+7 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 Moblie                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+
+7 rows selected.
+
+SQL> select pid,prod_name, lower(prod_name) from products;
+
+       PID PROD_NAME            LOWER(PROD_NAME)
+---------- -------------------- --------------------
+       111 Laptap               laptap
+       112 TV                   tv
+       113 Moblie               moblie
+       114 AC                   ac
+       115 ipod                 ipod
+       116 PC                   pc
+       116 dfds                 dfds
+
+7 rows selected.
+
+SQL> select upper('abcdefgh') from products;
+
+UPPER('A
+--------
+ABCDEFGH
+ABCDEFGH
+ABCDEFGH
+ABCDEFGH
+ABCDEFGH
+ABCDEFGH
+ABCDEFGH
+
+7 rows selected.
+
+SQL> select upper('abcdefgh') from dual;
+
+UPPER('A
+--------
+ABCDEFGH
+
+SQL> select lower('abcdefgh') from dual;
+
+LOWER('A
+--------
+abcdefgh
+
+SQL> select lower('ABCDEFGH') from dual;
+
+LOWER('A
+--------
+abcdefgh
+
+SQL> select pid,prod_name, initcap(prod_name) from products;
+
+       PID PROD_NAME            INITCAP(PROD_NAME)
+---------- -------------------- --------------------
+       111 Laptap               Laptap
+       112 TV                   Tv
+       113 Moblie               Moblie
+       114 AC                   Ac
+       115 ipod                 Ipod
+       116 PC                   Pc
+       116 dfds                 Dfds
+
+7 rows selected.
+
+SQL> update products set prod_name='mOBILE' WHERE products;
+update products set prod_name='mOBILE' WHERE products
+                                                    *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> update products set prod_name='mOBILE' WHERE products=113;
+update products set prod_name='mOBILE' WHERE products=113
+                                             *
+ERROR at line 1:
+ORA-00904: "PRODUCTS": invalid identifier
+
+
+SQL> update products set prod_name='mOBILE' WHERE pid=113;
+
+1 row updated.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+
+7 rows selected.
+
+SQL> select pid,prod_name, initcap(prod_name) from products;
+
+       PID PROD_NAME            INITCAP(PROD_NAME)
+---------- -------------------- --------------------
+       111 Laptap               Laptap
+       112 TV                   Tv
+       113 mOBILE               Mobile
+       114 AC                   Ac
+       115 ipod                 Ipod
+       116 PC                   Pc
+       116 dfds                 Dfds
+
+7 rows selected.
+
+SQL> select length('abcdefgh') from dual;
+
+LENGTH('ABCDEFGH')
+------------------
+                 8
+
+SQL> select pid,prod_name, length(prod_name) from products;
+
+       PID PROD_NAME            LENGTH(PROD_NAME)
+---------- -------------------- -----------------
+       111 Laptap                               6
+       112 TV                                   2
+       113 mOBILE                               6
+       114 AC                                   2
+       115 ipod                                 4
+       116 PC                                   2
+       116 dfds                                 4
+
+7 rows selected.
+
+SQL> SELECT REPLACE('Hello World', 'Hello', 'Hi') AS Result FROM dual;
+
+RESULT
+--------
+Hi World
+
+SQL> SELECT pid,prod_name REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+SELECT pid,prod_name REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products
+                             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT pid,prod_name REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+SELECT pid,prod_name REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products
+                             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT pid,prod_name, REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       111 Laptap
+Laptap
+
+       112 TV
+TV
+
+       113 mOBILE
+mOBILE
+
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       114 AC
+AC
+
+       115 ipod
+ipod
+
+       116 PC
+PC
+
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       116 dfds
+Fan
+
+
+7 rows selected.
+
+SQL> SELECT pid,prod_name, REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       111 Laptap
+Laptap
+
+       112 TV
+TV
+
+       113 mOBILE
+mOBILE
+
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       114 AC
+AC
+
+       115 ipod
+ipod
+
+       116 PC
+PC
+
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       116 dfds
+Fan
+
+
+7 rows selected.
+
+SQL> show pagesize;
+pagesize 14
+SQL> show linesize;
+linesize 80
+SQL> set pagesize 35
+SQL> SELECT pid,prod_name, REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+
+       PID PROD_NAME
+---------- --------------------
+UPDATED_NAME
+------------------------------------------------------------
+       111 Laptap
+Laptap
+
+       112 TV
+TV
+
+       113 mOBILE
+mOBILE
+
+       114 AC
+AC
+
+       115 ipod
+ipod
+
+       116 PC
+PC
+
+       116 dfds
+Fan
+
+
+7 rows selected.
+
+SQL> set linesize 200;
+SQL> SELECT pid,prod_name, REPLACE (prod_name, 'dfds', 'Fan') AS updated_name FROM products;
+
+       PID PROD_NAME            UPDATED_NAME
+---------- -------------------- ------------------------------------------------------------
+       111 Laptap               Laptap
+       112 TV                   TV
+       113 mOBILE               mOBILE
+       114 AC                   AC
+       115 ipod                 ipod
+       116 PC                   PC
+       116 dfds                 Fan
+
+7 rows selected.
+
+SQL> show pagesize;
+pagesize 35
+SQL> show linesize;
+linesize 200
+SQL> SELECT LPAD('Hello', 10, '*') AS padded_string FROM dual;
+
+PADDED_STR
+----------
+*****Hello
+
+SQL> SELECT rPAD('Hello', 10, '*') AS padded_string FROM dual;
+
+PADDED_STR
+----------
+Hello*****
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> SELECT LPAD(sname, 10, 'Mr.') AS padded_string FROM student;
+
+PADDED_STRING
+----------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> SELECT LPAD(sname, 10, '*') AS padded_string FROM student;
+
+PADDED_STRING
+----------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> SELECT LPAD(sname, 15, '*') AS padded_string FROM student;
+
+PADDED_STRING
+------------------------------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> SELECT rPAD(sname, 15, '*') AS padded_string FROM student;
+
+PADDED_STRING
+------------------------------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> desc student;
+ Name                                                                                               Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ROLLNUM                                                                                             NUMBER(5)
+ SNAME                                                                                               CHAR(20)
+ AGE                                                                                                 NUMBER(3)
+ PERCENTAGE                                                                                          NUMBER(5,2)
+ DOB                                                                                                 DATE
+
+SQL> set linesize 200;
+SQL> set pagesize 50;
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> desc student;
+ Name                                                                                               Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ROLLNUM                                                                                             NUMBER(5)
+ SNAME                                                                                               CHAR(20)
+ AGE                                                                                                 NUMBER(3)
+ PERCENTAGE                                                                                          NUMBER(5,2)
+ DOB                                                                                                 DATE
+
+SQL> SELECT LPAD(sname, 15, '*') AS padded_string FROM student;
+
+PADDED_STRING
+------------------------------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> SELECT LPAD(sname, 15, 'k') AS padded_string FROM student;
+
+PADDED_STRING
+------------------------------------------------------------
+Krishna
+Ramesh
+Suman
+Ramesh
+Mohan
+
+SQL> SELECT rollnum,sname, LPAD(sname, 15, 'k') AS padded_string FROM student;
+
+   ROLLNUM SNAME                PADDED_STRING
+---------- -------------------- ------------------------------------------------------------
+       101 Krishna              Krishna
+       102 Ramesh               Ramesh
+       103 Suman                Suman
+       104 Ramesh               Ramesh
+       105 Mohan                Mohan
+
+SQL> SELECT pid,prod_name, LPAD(prod_name, 15, 'k') AS padded_string FROM products;
+
+       PID PROD_NAME            PADDED_STRING
+---------- -------------------- ------------------------------------------------------------
+       111 Laptap               kkkkkkkkkLaptap
+       112 TV                   kkkkkkkkkkkkkTV
+       113 mOBILE               kkkkkkkkkmOBILE
+       114 AC                   kkkkkkkkkkkkkAC
+       115 ipod                 kkkkkkkkkkkipod
+       116 PC                   kkkkkkkkkkkkkPC
+       116 dfds                 kkkkkkkkkkkdfds
+
+7 rows selected.
+
+SQL> SELECT pid,prod_name, LPAD(prod_name, 10, 'P.') AS padded_string FROM products;
+
+       PID PROD_NAME            PADDED_STRING
+---------- -------------------- ----------------------------------------
+       111 Laptap               P.P.Laptap
+       112 TV                   P.P.P.P.TV
+       113 mOBILE               P.P.mOBILE
+       114 AC                   P.P.P.P.AC
+       115 ipod                 P.P.P.ipod
+       116 PC                   P.P.P.P.PC
+       116 dfds                 P.P.P.dfds
+
+7 rows selected.
+
+SQL> SELECT pid,prod_name, LPAD(prod_name, 10, 'Mr.') AS padded_string FROM products;
+
+       PID PROD_NAME            PADDED_STRING
+---------- -------------------- ----------------------------------------
+       111 Laptap               Mr.MLaptap
+       112 TV                   Mr.Mr.MrTV
+       113 mOBILE               Mr.MmOBILE
+       114 AC                   Mr.Mr.MrAC
+       115 ipod                 Mr.Mr.ipod
+       116 PC                   Mr.Mr.MrPC
+       116 dfds                 Mr.Mr.dfds
+
+7 rows selected.
+
+SQL> SELECT pid,prod_name, rPAD(prod_name, 10, 'Mr.') AS padded_string FROM products;
+
+       PID PROD_NAME            PADDED_STRING
+---------- -------------------- ----------------------------------------
+       111 Laptap               LaptapMr.M
+       112 TV                   TVMr.Mr.Mr
+       113 mOBILE               mOBILEMr.M
+       114 AC                   ACMr.Mr.Mr
+       115 ipod                 ipodMr.Mr.
+       116 PC                   PCMr.Mr.Mr
+       116 dfds                 dfdsMr.Mr.
+
+7 rows selected.
+
+SQL> SELECT LTRIM('$$$OpenAI$$$', '$') AS trimmed_string FROM dual;
+
+TRIMMED_S
+---------
+OpenAI$$$
+
+SQL> SELECT LTRIM('$$$OpenAI$$$', '$') AS trimmed_string FROM dual;
+
+TRIMMED_S
+---------
+OpenAI$$$
+
+SQL> SELECT rTRIM('$$$OpenAI$$$', '$') AS trimmed_string FROM dual;
+
+TRIMMED_S
+---------
+$$$OpenAI
+
+SQL> SELECT TRIM('$$$OpenAI$$$', '$') AS trimmed_string FROM dual;
+SELECT TRIM('$$$OpenAI$$$', '$') AS trimmed_string FROM dual
+                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> SELECT LTRIM('$' from '$$$OpenAI$$$') AS trimmed_string FROM dual;
+SELECT LTRIM('$' from '$$$OpenAI$$$') AS trimmed_string FROM dual
+                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> SELECT TRIM('$' from '$$$OpenAI$$$') AS trimmed_string FROM dual;
+
+TRIMME
+------
+OpenAI
+
+SQL> SELECT TRIM('A' from '$$$OpenAI$$$') AS trimmed_string FROM dual;
+
+TRIMMED_STRI
+------------
+$$$OpenAI$$$
+
+SQL> Select INSTR('ORACLE','A') from dual;
+
+INSTR('ORACLE','A')
+-------------------
+                  3
+
+SQL> Select INSTR('ORACLEAA','A') from dual;
+
+INSTR('ORACLEAA','A')
+---------------------
+                    3
+
+SQL> Select INSTR('ORCLEAA','A') from dual;
+
+INSTR('ORCLEAA','A')
+--------------------
+                   6
+
+SQL> Select INSTR(prod_name,'T') from products;
+
+INSTR(PROD_NAME,'T')
+--------------------
+                   0
+                   1
+                   0
+                   0
+                   0
+                   0
+                   0
+
+7 rows selected.
+
+SQL> Select INSTR(prod_name,'p') from products;
+
+INSTR(PROD_NAME,'P')
+--------------------
+                   3
+                   0
+                   0
+                   0
+                   2
+                   0
+                   0
+
+7 rows selected.
+
+SQL> SeLecT INSTR(prod_name,'p') from products;
+
+INSTR(PROD_NAME,'P')
+--------------------
+                   3
+                   0
+                   0
+                   0
+                   2
+                   0
+                   0
+
+7 rows selected.
+
+SQL> SELECT SUBSTR('ORACLE', 2, 3) FROM dual;
+
+SUB
+---
+RAC
+
+SQL> SELECT SUBSTR('ORACLE', 3, 3) FROM dual;
+
+SUB
+---
+ACL
+
+SQL> SeLecT INSTR(prod_name,'pP') from products;
+
+INSTR(PROD_NAME,'PP')
+---------------------
+                    0
+                    0
+                    0
+                    0
+                    0
+                    0
+                    0
+
+7 rows selected.
+
+SQL> SeLecT INSTR(prod_name,'TV') from products;
+
+INSTR(PROD_NAME,'TV')
+---------------------
+                    0
+                    1
+                    0
+                    0
+                    0
+                    0
+                    0
+
+7 rows selected.
+
+SQL> SELECT SUBSTR(prod_name, 3, 3) FROM products;
+
+SUBSTR(PROD_
+------------
+pta
+
+BIL
+
+od
+
+ds
+
+7 rows selected.
+
+SQL> SELECT prod_name, SUBSTR(prod_name, 3, 3) FROM products;
+
+PROD_NAME            SUBSTR(PROD_
+-------------------- ------------
+Laptap               pta
+TV
+mOBILE               BIL
+AC
+ipod                 od
+PC
+dfds                 ds
+
+7 rows selected.
+
+SQL> SELECT prod_name, SUBSTR(prod_name, 3, 3) as SUBSTR FROM products;
+
+PROD_NAME            SUBSTR
+-------------------- ------------
+Laptap               pta
+TV
+mOBILE               BIL
+AC
+ipod                 od
+PC
+dfds                 ds
+
+7 rows selected.
+
+SQL> SELECT CONCAT('Hello', 'World') AS concatenated_string FROM dual;
+
+CONCATENAT
+----------
+HelloWorld
+
+SQL> SELECT CONCAT('Hello', ' World') AS concatenated_string FROM dual;
+
+CONCATENATE
+-----------
+Hello World
+
+SQL> SELECT CONCAT(prod_name, 'P.') AS concatenated_string FROM products;
+
+CONCATENATED_STRING
+----------------------
+LaptapP.
+TVP.
+mOBILEP.
+ACP.
+ipodP.
+PCP.
+dfdsP.
+
+7 rows selected.
+
+SQL> SELECT CONCAT('P.', prod_name) AS concatenated_string FROM products;
+
+CONCATENATED_STRING
+----------------------
+P.Laptap
+P.TV
+P.mOBILE
+P.AC
+P.ipod
+P.PC
+P.dfds
+
+7 rows selected.
+
+SQL> SELECT sname, CONCAT('Mr.', sname) AS concatenated_string FROM student;
+
+SNAME                CONCATENATED_STRING
+-------------------- -----------------------
+Krishna              Mr.Krishna
+Ramesh               Mr.Ramesh
+Suman                Mr.Suman
+Ramesh               Mr.Ramesh
+Mohan                Mr.Mohan
+
+SQL> SELECT sname, CONCAT('Mr.', sname, 'Garu') AS concatenated_string FROM student;
+SELECT sname, CONCAT('Mr.', sname, 'Garu') AS concatenated_string FROM student
+              *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> SELECT sname, CONCAT(sname, 'Garu') AS concatenated_string FROM student;
+
+SNAME                CONCATENATED_STRING
+-------------------- ------------------------
+Krishna              Krishna             Garu
+Ramesh               Ramesh              Garu
+Suman                Suman               Garu
+Ramesh               Ramesh              Garu
+Mohan                Mohan               Garu
+
+SQL> SELECT sname, CONCAT('Mr.', sname) AS concatenated_string FROM student;
+
+SNAME                CONCATENATED_STRING
+-------------------- -----------------------
+Krishna              Mr.Krishna
+Ramesh               Mr.Ramesh
+Suman                Mr.Suman
+Ramesh               Mr.Ramesh
+Mohan                Mr.Mohan
+
+SQL> SELECT TRANSLATE(prod_name, 'LTA', '#$%') FROM s1;
+SELECT TRANSLATE(prod_name, 'LTA', '#$%') FROM s1
+                 *
+ERROR at line 1:
+ORA-00904: "PROD_NAME": invalid identifier
+
+
+SQL> SELECT TRANSLATE(prod_name, 'LTA', '#$%') FROM products;
+
+TRANSLATE(PROD_NAME,'LTA','#$%')
+--------------------------------------------------------------------------------
+#aptap
+$V
+mOBI#E
+%C
+ipod
+PC
+dfds
+
+7 rows selected.
+
+SQL> SELECT sname, ASCII(sname) FROM student;
+
+SNAME                ASCII(SNAME)
+-------------------- ------------
+Krishna                        75
+Ramesh                         82
+Suman                          83
+Ramesh                         82
+Mohan                          77
+
+SQL> SELECT * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> SELECT  ASCII(ABCD) FROM dual;
+SELECT  ASCII(ABCD) FROM dual
+              *
+ERROR at line 1:
+ORA-00904: "ABCD": invalid identifier
+
+
+SQL> SELECT  ASCII('ABCD') FROM dual;
+
+ASCII('ABCD')
+-------------
+           65
+
+SQL> SELECT  ASCII('a') FROM dual;
+
+ASCII('A')
+----------
+        97
+
+SQL> SELECT  ASCII('z') FROM dual;
+
+ASCII('Z')
+----------
+       122
+
+SQL> SELECT ABS(-10) AS absolute_value FROM dual;
+
+ABSOLUTE_VALUE
+--------------
+            10
+
+SQL> SELECT ABS(-10.2344) AS absolute_value FROM dual;
+
+ABSOLUTE_VALUE
+--------------
+       10.2344
+
+SQL> SELECT ABS(10.2344) AS absolute_value FROM dual;
+
+ABSOLUTE_VALUE
+--------------
+       10.2344
+
+SQL> Select SQRT(25) from dual;
+
+  SQRT(25)
+----------
+         5
+
+SQL> Select SQRT(9) from dual;
+
+   SQRT(9)
+----------
+         3
+
+SQL> Select SQRT(625) from dual;
+
+ SQRT(625)
+----------
+        25
+
+SQL> Select mod(10,2) from dual;
+
+ MOD(10,2)
+----------
+         0
+
+SQL> Select mod(10,3) from dual;
+
+ MOD(10,3)
+----------
+         1
+
+SQL> Select mod(10,4) from dual;
+
+ MOD(10,4)
+----------
+         2
+
+SQL> Select mod(10,5) from dual;
+
+ MOD(10,5)
+----------
+         0
+
+SQL> Select mod(10,6) from dual;
+
+ MOD(10,6)
+----------
+         4
+
+SQL> Select pow(10,6) from dual;
+Select pow(10,6) from dual
+       *
+ERROR at line 1:
+ORA-00904: "POW": invalid identifier
+
+
+SQL> Select power(10,6) from dual;
+
+POWER(10,6)
+-----------
+    1000000
+
+SQL> Select power(2,5) from dual;
+
+POWER(2,5)
+----------
+        32
+
+SQL> Select power(5,5) from dual;
+
+POWER(5,5)
+----------
+      3125
+
+SQL> Select power(5,3) from dual;
+
+POWER(5,3)
+----------
+       125
+
+SQL> Select ROUND(40.9) from dual;
+
+ROUND(40.9)
+-----------
+         41
+
+SQL> Select ROUND(40.3) from dual;
+
+ROUND(40.3)
+-----------
+         40
+
+SQL> Select ceil(40.9) from dual;
+
+CEIL(40.9)
+----------
+        41
+
+SQL> Select ceil(40.3) from dual;
+
+CEIL(40.3)
+----------
+        41
+
+SQL> Select floor(40.9) from dual;
+
+FLOOR(40.9)
+-----------
+         40
+
+SQL> Select floor(40.3) from dual;
+
+FLOOR(40.3)
+-----------
+         40
+
+SQL> Select ROUND(40.3) from dual;
+
+ROUND(40.3)
+-----------
+         40
+
+SQL> Select ROUND(40.5) from dual;
+
+ROUND(40.5)
+-----------
+         41
+
+SQL> Select ROUND(40.56,2) from dual;
+
+ROUND(40.56,2)
+--------------
+         40.56
+
+SQL> Select ROUND(40.562,2) from dual;
+
+ROUND(40.562,2)
+---------------
+          40.56
+
+SQL> Select ROUND(40.567,2) from dual;
+
+ROUND(40.567,2)
+---------------
+          40.57
+
+SQL> Select ROUND(40.567,3) from dual;
+
+ROUND(40.567,3)
+---------------
+         40.567
+
+SQL> Select ROUND(40.563,3) from dual;
+
+ROUND(40.563,3)
+---------------
+         40.563
+
+SQL> Select ROUND(856.81766,3) from dual;
+
+ROUND(856.81766,3)
+------------------
+           856.818
+
+SQL> Select ROUND(856.81763,3) from dual;
+
+ROUND(856.81763,3)
+------------------
+           856.818
+
+SQL> Select ROUND(856.81333,3) from dual;
+
+ROUND(856.81333,3)
+------------------
+           856.813
+
+SQL> Select ROUND(123,-1) from dual;
+
+ROUND(123,-1)
+-------------
+          120
+
+SQL> Select ROUND(123,-2) from dual;
+
+ROUND(123,-2)
+-------------
+          100
+
+SQL> Select ROUND(56738,-1) from dual;
+
+ROUND(56738,-1)
+---------------
+          56740
+
+SQL> Select ROUND(56738,-2) from dual;
+
+ROUND(56738,-2)
+---------------
+          56700
+
+SQL> Select ROUND(56738,-3) from dual;
+
+ROUND(56738,-3)
+---------------
+          57000
+
+SQL> Select ROUND(56738,-4) from dual;
+
+ROUND(56738,-4)
+---------------
+          60000
+
+SQL> Select ROUND(56738,-5) from dual;
+
+ROUND(56738,-5)
+---------------
+         100000
+
+SQL> Select ROUND(56738,-6) from dual;
+
+ROUND(56738,-6)
+---------------
+              0
+
+SQL> Select ROUND(56738,-7) from dual;
+
+ROUND(56738,-7)
+---------------
+              0
+
+SQL> Select TRUNC(40.9) from dual;
+
+TRUNC(40.9)
+-----------
+         40
+
+SQL> Select TRUNC(40.8) from dual;
+
+TRUNC(40.8)
+-----------
+         40
+
+SQL> Select TRUNC(40.2) from dual;
+
+TRUNC(40.2)
+-----------
+         40
+
+SQL> Select TRUNC(6854,-1) from dual;
+
+TRUNC(6854,-1)
+--------------
+          6850
+
+SQL> Select TRUNC(6854,-2) from dual;
+
+TRUNC(6854,-2)
+--------------
+          6800
+
+SQL> Select TRUNC(6854,-3) from dual;
+
+TRUNC(6854,-3)
+--------------
+          6000
+
+SQL> Select TRUNC(6854,-4) from dual;
+
+TRUNC(6854,-4)
+--------------
+             0
+
+SQL> Select GREATEST (100,200,300) from dual;
+
+GREATEST(100,200,300)
+---------------------
+                  300
+
+SQL> Select least (100,200,300) from dual;
+
+LEAST(100,200,300)
+------------------
+               100
+
+SQL> SELECT SIGN(7) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+         1
+
+SQL> SELECT SIGN(-7) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+        -1
+
+SQL> SELECT SIGN(0) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+         0
+
+SQL> SELECT SIGN(-753454) AS sign_value FROM dual;
+
+SIGN_VALUE
+----------
+        -1
+
+SQL>
