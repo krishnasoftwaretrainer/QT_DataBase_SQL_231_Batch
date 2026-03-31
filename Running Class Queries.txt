@@ -4248,3 +4248,1636 @@ SQL> select * from mv1;
 8 rows selected.
 
 SQL>
+===============
+
+SQL*Plus: Release 11.2.0.2.0 Production on Tue Mar 31 09:08:12 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt231
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT                        TABLE
+V1                             VIEW
+V2                             VIEW
+
+14 rows selected.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+           ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+7 rows selected.
+
+SQL> select * from student where age>=50;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+           ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> desc v1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+
+SQL> select * from v1;
+
+SNAME                       AGE
+-------------------- ----------
+Krishna                      25
+Ramesh                       33
+Suman                        44
+
+SQL> create view stuv1 as select * from student where age>=50;
+
+View created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+15 rows selected.
+
+SQL> select * from stuv1;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+           ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student where age>=50;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+           ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> update stuv1 set rollnum=106 where sname='ABCD';
+
+1 row updated.
+
+SQL> select * from stuv1;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+           EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+7 rows selected.
+
+SQL> update student set rollnum=107 where sname='EFGH';
+
+1 row updated.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+7 rows selected.
+
+SQL> select * from stuv1;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+SQL> select * from READV1;
+
+       PID PROD_NAME
+---------- --------------------
+       111 Laptap
+       112 TV
+       113 mOBILE
+       114 AC
+       115 ipod
+       116 PC
+       116 dfds
+       117 dgs
+
+8 rows selected.
+
+SQL> desc readv1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PID                                                NUMBER(3)
+ PROD_NAME                                          VARCHAR2(20)
+
+SQL> insert into readv1 values(101,'sgsr');
+insert into readv1 values(101,'sgsr')
+*
+ERROR at line 1:
+ORA-42399: cannot perform a DML operation on a read-only view
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+15 rows selected.
+
+SQL> desc cv1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ PID                                                NUMBER(3)
+ PROD_NAME                                          VARCHAR2(20)
+ PROD_PRICE                                         NUMBER(6)
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+7 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+       117 dgs                        3600
+
+8 rows selected.
+
+SQL> desc cv1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+ PERCENTAGE                                         NUMBER(5,2)
+ PID                                                NUMBER(3)
+ PROD_NAME                                          VARCHAR2(20)
+ PROD_PRICE                                         NUMBER(6)
+
+SQL> insert into cv1 values('ffd',11,99.99,55,'sfsdgdf',66);
+insert into cv1 values('ffd',11,99.99,55,'sfsdgdf',66)
+*
+ERROR at line 1:
+ORA-01779: cannot modify a column which maps to a non key-preserved table
+
+
+SQL> select * from cv1;
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Krishna                      25      99.99        111 Laptap
+     65000
+
+Krishna                      25      99.99        112 TV
+     35000
+
+Krishna                      25      99.99        113 mOBILE
+     25000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Krishna                      25      99.99        114 AC
+     45000
+
+Krishna                      25      99.99        115 ipod
+     15000
+
+Krishna                      25      99.99        116 PC
+
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Krishna                      25      99.99        116 dfds
+
+
+Krishna                      25      99.99        117 dgs
+      3600
+
+Ramesh                       33      88.86        111 Laptap
+     65000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       33      88.86        112 TV
+     35000
+
+Ramesh                       33      88.86        113 mOBILE
+     25000
+
+Ramesh                       33      88.86        114 AC
+     45000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       33      88.86        115 ipod
+     15000
+
+Ramesh                       33      88.86        116 PC
+
+
+Ramesh                       33      88.86        116 dfds
+
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       33      88.86        117 dgs
+      3600
+
+Suman                        44      77.93        111 Laptap
+     65000
+
+Suman                        44      77.93        112 TV
+     35000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Suman                        44      77.93        113 mOBILE
+     25000
+
+Suman                        44      77.93        114 AC
+     45000
+
+Suman                        44      77.93        115 ipod
+     15000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Suman                        44      77.93        116 PC
+
+
+Suman                        44      77.93        116 dfds
+
+
+Suman                        44      77.93        117 dgs
+      3600
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       55         55        111 Laptap
+     65000
+
+Ramesh                       55         55        112 TV
+     35000
+
+Ramesh                       55         55        113 mOBILE
+     25000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       55         55        114 AC
+     45000
+
+Ramesh                       55         55        115 ipod
+     15000
+
+Ramesh                       55         55        116 PC
+
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Ramesh                       55         55        116 dfds
+
+
+Ramesh                       55         55        117 dgs
+      3600
+
+ABCD                         55                   111 Laptap
+     65000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+ABCD                         55                   112 TV
+     35000
+
+ABCD                         55                   113 mOBILE
+     25000
+
+ABCD                         55                   114 AC
+     45000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+ABCD                         55                   115 ipod
+     15000
+
+ABCD                         55                   116 PC
+
+
+ABCD                         55                   116 dfds
+
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+ABCD                         55                   117 dgs
+      3600
+
+EFGH                         95                   111 Laptap
+     65000
+
+EFGH                         95                   112 TV
+     35000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+EFGH                         95                   113 mOBILE
+     25000
+
+EFGH                         95                   114 AC
+     45000
+
+EFGH                         95                   115 ipod
+     15000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+EFGH                         95                   116 PC
+
+
+EFGH                         95                   116 dfds
+
+
+EFGH                         95                   117 dgs
+      3600
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Mohan                        66      66.66        111 Laptap
+     65000
+
+Mohan                        66      66.66        112 TV
+     35000
+
+Mohan                        66      66.66        113 mOBILE
+     25000
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Mohan                        66      66.66        114 AC
+     45000
+
+Mohan                        66      66.66        115 ipod
+     15000
+
+Mohan                        66      66.66        116 PC
+
+
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME
+-------------------- ---------- ---------- ---------- --------------------
+PROD_PRICE
+----------
+Mohan                        66      66.66        116 dfds
+
+
+Mohan                        66      66.66        117 dgs
+      3600
+
+
+56 rows selected.
+
+SQL>
+SQL> set linesize 200;
+SQL> select * from cv1;
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+Krishna                      25      99.99        111 Laptap                    65000
+Krishna                      25      99.99        112 TV                        35000
+Krishna                      25      99.99        113 mOBILE                    25000
+Krishna                      25      99.99        114 AC                        45000
+Krishna                      25      99.99        115 ipod                      15000
+Krishna                      25      99.99        116 PC
+Krishna                      25      99.99        116 dfds
+Krishna                      25      99.99        117 dgs                        3600
+Ramesh                       33      88.86        111 Laptap                    65000
+Ramesh                       33      88.86        112 TV                        35000
+Ramesh                       33      88.86        113 mOBILE                    25000
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+Ramesh                       33      88.86        114 AC                        45000
+Ramesh                       33      88.86        115 ipod                      15000
+Ramesh                       33      88.86        116 PC
+Ramesh                       33      88.86        116 dfds
+Ramesh                       33      88.86        117 dgs                        3600
+Suman                        44      77.93        111 Laptap                    65000
+Suman                        44      77.93        112 TV                        35000
+Suman                        44      77.93        113 mOBILE                    25000
+Suman                        44      77.93        114 AC                        45000
+Suman                        44      77.93        115 ipod                      15000
+Suman                        44      77.93        116 PC
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+Suman                        44      77.93        116 dfds
+Suman                        44      77.93        117 dgs                        3600
+Ramesh                       55         55        111 Laptap                    65000
+Ramesh                       55         55        112 TV                        35000
+Ramesh                       55         55        113 mOBILE                    25000
+Ramesh                       55         55        114 AC                        45000
+Ramesh                       55         55        115 ipod                      15000
+Ramesh                       55         55        116 PC
+Ramesh                       55         55        116 dfds
+Ramesh                       55         55        117 dgs                        3600
+ABCD                         55                   111 Laptap                    65000
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+ABCD                         55                   112 TV                        35000
+ABCD                         55                   113 mOBILE                    25000
+ABCD                         55                   114 AC                        45000
+ABCD                         55                   115 ipod                      15000
+ABCD                         55                   116 PC
+ABCD                         55                   116 dfds
+ABCD                         55                   117 dgs                        3600
+EFGH                         95                   111 Laptap                    65000
+EFGH                         95                   112 TV                        35000
+EFGH                         95                   113 mOBILE                    25000
+EFGH                         95                   114 AC                        45000
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+EFGH                         95                   115 ipod                      15000
+EFGH                         95                   116 PC
+EFGH                         95                   116 dfds
+EFGH                         95                   117 dgs                        3600
+Mohan                        66      66.66        111 Laptap                    65000
+Mohan                        66      66.66        112 TV                        35000
+Mohan                        66      66.66        113 mOBILE                    25000
+Mohan                        66      66.66        114 AC                        45000
+Mohan                        66      66.66        115 ipod                      15000
+Mohan                        66      66.66        116 PC
+Mohan                        66      66.66        116 dfds
+
+SNAME                       AGE PERCENTAGE        PID PROD_NAME            PROD_PRICE
+-------------------- ---------- ---------- ---------- -------------------- ----------
+Mohan                        66      66.66        117 dgs                        3600
+
+56 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+15 rows selected.
+
+SQL> desc checkv1;
+ Name                                                                                                     Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PID                                                                                                       NUMBER(3)
+ PROD_NAME                                                                                                 VARCHAR2(20)
+ PROD_PRICE                                                                                                NUMBER(6)
+
+SQL> select * from checkv1;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       117 dgs                        3600
+
+6 rows selected.
+
+SQL> insert into checkv1 values(118,'dsfsed',3000);
+insert into checkv1 values(118,'dsfsed',3000)
+            *
+ERROR at line 1:
+ORA-01402: view WITH CHECK OPTION where-clause violation
+
+
+SQL> insert into checkv1 values(118,'dsfsed',30000);
+
+1 row created.
+
+SQL> desc mv1;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PID                                                                                                                    NUMBER(3)
+ PROD_NAME                                                                                                              VARCHAR2(20)
+ PROD_PRICE                                                                                                             NUMBER(6)
+
+SQL> select * from mv1;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+       117 dgs                        3600
+
+8 rows selected.
+
+SQL> update mv1 set prod_price=55000 where prod_name='PC';
+update mv1 set prod_price=55000 where prod_name='PC'
+       *
+ERROR at line 1:
+ORA-01732: data manipulation operation not legal on this view
+
+
+SQL> update view mv1 set prod_price=55000 where prod_name='PC';
+update view mv1 set prod_price=55000 where prod_name='PC'
+       *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> update mv1 set prod_price=55000 where prod_name='PC';
+update mv1 set prod_price=55000 where prod_name='PC'
+       *
+ERROR at line 1:
+ORA-01732: data manipulation operation not legal on this view
+
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> update products set prod_price=55000 where prod_name='PC';
+
+1 row updated.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> select * from mv1;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC
+       116 dfds
+       117 dgs                        3600
+
+8 rows selected.
+
+SQL> EXEC DBMS_MVIEW.REFRESH('MV1');
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from mv1;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+
+SQL> desc s2;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                               NOT NULL NUMBER(3)
+ SNAME                                                                                                                      VARCHAR2(10)
+
+SQL> desc s3;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SID                                                                                                                        NUMBER(3)
+ SNAME                                                                                                                      VARCHAR2(10)
+
+SQL> create index idx1 on products(pid);
+
+Index created.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+IDX1                           PRODUCTS
+
+SQL> desc products;
+ Name                                                                                                           Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PID                                                                                                             NUMBER(3)
+ PROD_NAME                                                                                                       VARCHAR2(20)
+ PROD_PRICE                                                                                                      NUMBER(6)
+
+SQL> alter index idx1 to id1;
+alter index idx1 to id1
+                 *
+ERROR at line 1:
+ORA-02243: invalid ALTER INDEX or ALTER MATERIALIZED VIEW option
+
+
+SQL> alter index  idx1 rename to id1;
+
+Index altered.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+ID1                            PRODUCTS
+
+SQL> alter index  id1 rename to idx1;
+
+Index altered.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+IDX1                           PRODUCTS
+
+SQL> create index idx1 on products(pid);
+create index idx1 on products(pid)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create index idx2 on products(pid);
+create index idx2 on products(pid)
+                              *
+ERROR at line 1:
+ORA-01408: such column list already indexed
+
+
+SQL> create index idx2 on products(pid,prod_name);
+
+Index created.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+IDX1                           PRODUCTS
+IDX2                           PRODUCTS
+
+SQL> select * from s4;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         1 Krishna
+         1 Krishna
+         1 Krishna
+
+SQL> trunacte s4;
+SP2-0734: unknown command beginning "trunacte s..." - rest of line ignored.
+SQL> trunacte table s4;
+SP2-0734: unknown command beginning "trunacte t..." - rest of line ignored.
+SQL> truncate s4;
+truncate s4
+          *
+ERROR at line 1:
+ORA-03290: Invalid truncate command - missing CLUSTER or TABLE keyword
+
+
+SQL> truncate table s4;
+
+Table truncated.
+
+SQL> select * from s4;
+
+no rows selected
+
+SQL> CREATE UNIQUE INDEX s4_sid_unique ON s4(sid);
+
+Index created.
+
+SQL> select index_name, table_name from user_indexes;
+
+INDEX_NAME                     TABLE_NAME
+------------------------------ ------------------------------
+SYS_C007324                    S2
+SYS_C007325                    S3
+IDX1                           PRODUCTS
+IDX2                           PRODUCTS
+S4_SID_UNIQUE                  S4
+
+SQL> insert into s4 values(1,'Krishna');
+
+1 row created.
+
+SQL> insert into s4 values(1,'Krishna');
+insert into s4 values(1,'Krishna')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (QT231.S4_SID_UNIQUE) violated
+
+
+SQL> insert into s4 values(2,'Krishna');
+
+1 row created.
+
+SQL> select * from s4;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+
+SQL>
+SQL> SELECT CUSTOMERS\.ID, CUSTOMERS.NAME, CUSTOMERS.AGE FROM CUSTOMERS INNER JOIN ORDERS ON CUSTOMERS.ID = ORDERS.ID;
+SELECT CUSTOMERS\.ID, CUSTOMERS.NAME, CUSTOMERS.AGE FROM CUSTOMERS INNER JOIN ORDERS ON CUSTOMERS.ID = ORDERS.ID
+                *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> desc student;
+ Name                                                                                               Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ROLLNUM                                                                                             NUMBER(5)
+ SNAME                                                                                               CHAR(20)
+ AGE                                                                                                 NUMBER(3)
+ PERCENTAGE                                                                                          NUMBER(5,2)
+ DOB                                                                                                 DATE
+
+SQL> desc products;
+ Name                                                                                               Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PID                                                                                                 NUMBER(3)
+ PROD_NAME                                                                                           VARCHAR2(20)
+ PROD_PRICE                                                                                          NUMBER(6)
+
+SQL> set pagesize 25;
+SQL> desc student;
+ Name                                                                                               Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ROLLNUM                                                                                             NUMBER(5)
+ SNAME                                                                                               CHAR(20)
+ AGE                                                                                                 NUMBER(3)
+ PERCENTAGE                                                                                          NUMBER(5,2)
+ DOB                                                                                                 DATE
+
+SQL> desc products;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ PID                                                                                                                    NUMBER(3)
+ PROD_NAME                                                                                                              VARCHAR2(20)
+ PROD_PRICE                                                                                                             NUMBER(6)
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student INNER JOIN products ON student.rollnum = products.pID;
+
+no rows selected
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       105 Mohan                        66      66.66 30-SEP-02
+
+7 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> insert into student values(112,'dgsdgg',65,88.33,'10/aug/26);
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> insert into student values(112,'dgsdgg',65,88.33,'10/aug/26');
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       112 dgsdgg                       65      88.33 10-AUG-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+8 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student INNER JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       112 dgsdgg                       65        112 TV
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student INNER JOIN products ON student.rollnum != products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25        111 Laptap
+       102 Ramesh                       33        111 Laptap
+       103 Suman                        44        111 Laptap
+       104 Ramesh                       55        111 Laptap
+       106 ABCD                         55        111 Laptap
+       107 EFGH                         95        111 Laptap
+       112 dgsdgg                       65        111 Laptap
+       105 Mohan                        66        111 Laptap
+       101 Krishna                      25        112 TV
+       102 Ramesh                       33        112 TV
+       103 Suman                        44        112 TV
+       104 Ramesh                       55        112 TV
+       106 ABCD                         55        112 TV
+       107 EFGH                         95        112 TV
+       105 Mohan                        66        112 TV
+       101 Krishna                      25        113 mOBILE
+       102 Ramesh                       33        113 mOBILE
+       103 Suman                        44        113 mOBILE
+       104 Ramesh                       55        113 mOBILE
+       106 ABCD                         55        113 mOBILE
+       107 EFGH                         95        113 mOBILE
+       112 dgsdgg                       65        113 mOBILE
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       105 Mohan                        66        113 mOBILE
+       101 Krishna                      25        114 AC
+       102 Ramesh                       33        114 AC
+       103 Suman                        44        114 AC
+       104 Ramesh                       55        114 AC
+       106 ABCD                         55        114 AC
+       107 EFGH                         95        114 AC
+       112 dgsdgg                       65        114 AC
+       105 Mohan                        66        114 AC
+       101 Krishna                      25        115 ipod
+       102 Ramesh                       33        115 ipod
+       103 Suman                        44        115 ipod
+       104 Ramesh                       55        115 ipod
+       106 ABCD                         55        115 ipod
+       107 EFGH                         95        115 ipod
+       112 dgsdgg                       65        115 ipod
+       105 Mohan                        66        115 ipod
+       101 Krishna                      25        116 PC
+       102 Ramesh                       33        116 PC
+       103 Suman                        44        116 PC
+       104 Ramesh                       55        116 PC
+       106 ABCD                         55        116 PC
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       107 EFGH                         95        116 PC
+       112 dgsdgg                       65        116 PC
+       105 Mohan                        66        116 PC
+       101 Krishna                      25        116 dfds
+       102 Ramesh                       33        116 dfds
+       103 Suman                        44        116 dfds
+       104 Ramesh                       55        116 dfds
+       106 ABCD                         55        116 dfds
+       107 EFGH                         95        116 dfds
+       112 dgsdgg                       65        116 dfds
+       105 Mohan                        66        116 dfds
+       101 Krishna                      25        117 dgs
+       102 Ramesh                       33        117 dgs
+       103 Suman                        44        117 dgs
+       104 Ramesh                       55        117 dgs
+       106 ABCD                         55        117 dgs
+       107 EFGH                         95        117 dgs
+       112 dgsdgg                       65        117 dgs
+       105 Mohan                        66        117 dgs
+       101 Krishna                      25        118 dsfsed
+       102 Ramesh                       33        118 dsfsed
+       103 Suman                        44        118 dsfsed
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       104 Ramesh                       55        118 dsfsed
+       106 ABCD                         55        118 dsfsed
+       107 EFGH                         95        118 dsfsed
+       112 dgsdgg                       65        118 dsfsed
+       105 Mohan                        66        118 dsfsed
+
+71 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student left JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       106 ABCD                         55
+       107 EFGH                         95
+       112 dgsdgg                       65        112 TV
+       105 Mohan                        66
+
+8 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student left JOIN products ON student.rollnum != products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25        111 Laptap
+       101 Krishna                      25        112 TV
+       101 Krishna                      25        113 mOBILE
+       101 Krishna                      25        114 AC
+       101 Krishna                      25        115 ipod
+       101 Krishna                      25        116 PC
+       101 Krishna                      25        116 dfds
+       101 Krishna                      25        117 dgs
+       101 Krishna                      25        118 dsfsed
+       102 Ramesh                       33        111 Laptap
+       102 Ramesh                       33        112 TV
+       102 Ramesh                       33        113 mOBILE
+       102 Ramesh                       33        114 AC
+       102 Ramesh                       33        115 ipod
+       102 Ramesh                       33        116 PC
+       102 Ramesh                       33        116 dfds
+       102 Ramesh                       33        117 dgs
+       102 Ramesh                       33        118 dsfsed
+       103 Suman                        44        111 Laptap
+       103 Suman                        44        112 TV
+       103 Suman                        44        113 mOBILE
+       103 Suman                        44        114 AC
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       103 Suman                        44        115 ipod
+       103 Suman                        44        116 PC
+       103 Suman                        44        116 dfds
+       103 Suman                        44        117 dgs
+       103 Suman                        44        118 dsfsed
+       104 Ramesh                       55        111 Laptap
+       104 Ramesh                       55        112 TV
+       104 Ramesh                       55        113 mOBILE
+       104 Ramesh                       55        114 AC
+       104 Ramesh                       55        115 ipod
+       104 Ramesh                       55        116 PC
+       104 Ramesh                       55        116 dfds
+       104 Ramesh                       55        117 dgs
+       104 Ramesh                       55        118 dsfsed
+       106 ABCD                         55        111 Laptap
+       106 ABCD                         55        112 TV
+       106 ABCD                         55        113 mOBILE
+       106 ABCD                         55        114 AC
+       106 ABCD                         55        115 ipod
+       106 ABCD                         55        116 PC
+       106 ABCD                         55        116 dfds
+       106 ABCD                         55        117 dgs
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       106 ABCD                         55        118 dsfsed
+       107 EFGH                         95        111 Laptap
+       107 EFGH                         95        112 TV
+       107 EFGH                         95        113 mOBILE
+       107 EFGH                         95        114 AC
+       107 EFGH                         95        115 ipod
+       107 EFGH                         95        116 PC
+       107 EFGH                         95        116 dfds
+       107 EFGH                         95        117 dgs
+       107 EFGH                         95        118 dsfsed
+       112 dgsdgg                       65        111 Laptap
+       112 dgsdgg                       65        113 mOBILE
+       112 dgsdgg                       65        114 AC
+       112 dgsdgg                       65        115 ipod
+       112 dgsdgg                       65        116 PC
+       112 dgsdgg                       65        116 dfds
+       112 dgsdgg                       65        117 dgs
+       112 dgsdgg                       65        118 dsfsed
+       105 Mohan                        66        111 Laptap
+       105 Mohan                        66        112 TV
+       105 Mohan                        66        113 mOBILE
+       105 Mohan                        66        114 AC
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       105 Mohan                        66        115 ipod
+       105 Mohan                        66        116 PC
+       105 Mohan                        66        116 dfds
+       105 Mohan                        66        117 dgs
+       105 Mohan                        66        118 dsfsed
+
+71 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student right JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       112 dgsdgg                       65        112 TV
+                                                  118 dsfsed
+                                                  111 Laptap
+                                                  117 dgs
+                                                  114 AC
+                                                  116 dfds
+                                                  116 PC
+                                                  113 mOBILE
+                                                  115 ipod
+
+9 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student left JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       106 ABCD                         55
+       107 EFGH                         95
+       112 dgsdgg                       65        112 TV
+       105 Mohan                        66
+
+8 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student full JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+                                                  111 Laptap
+       112 dgsdgg                       65        112 TV
+                                                  113 mOBILE
+                                                  114 AC
+                                                  115 ipod
+                                                  116 PC
+                                                  116 dfds
+                                                  117 dgs
+                                                  118 dsfsed
+       103 Suman                        44
+       101 Krishna                      25
+       104 Ramesh                       55
+       106 ABCD                         55
+       102 Ramesh                       33
+       105 Mohan                        66
+       107 EFGH                         95
+
+16 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student JOIN products ON student.rollnum = products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       112 dgsdgg                       65        112 TV
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student JOIN products ON student.rollnum != products.pID;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25        111 Laptap
+       102 Ramesh                       33        111 Laptap
+       103 Suman                        44        111 Laptap
+       104 Ramesh                       55        111 Laptap
+       106 ABCD                         55        111 Laptap
+       107 EFGH                         95        111 Laptap
+       112 dgsdgg                       65        111 Laptap
+       105 Mohan                        66        111 Laptap
+       101 Krishna                      25        112 TV
+       102 Ramesh                       33        112 TV
+       103 Suman                        44        112 TV
+       104 Ramesh                       55        112 TV
+       106 ABCD                         55        112 TV
+       107 EFGH                         95        112 TV
+       105 Mohan                        66        112 TV
+       101 Krishna                      25        113 mOBILE
+       102 Ramesh                       33        113 mOBILE
+       103 Suman                        44        113 mOBILE
+       104 Ramesh                       55        113 mOBILE
+       106 ABCD                         55        113 mOBILE
+       107 EFGH                         95        113 mOBILE
+       112 dgsdgg                       65        113 mOBILE
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       105 Mohan                        66        113 mOBILE
+       101 Krishna                      25        114 AC
+       102 Ramesh                       33        114 AC
+       103 Suman                        44        114 AC
+       104 Ramesh                       55        114 AC
+       106 ABCD                         55        114 AC
+       107 EFGH                         95        114 AC
+       112 dgsdgg                       65        114 AC
+       105 Mohan                        66        114 AC
+       101 Krishna                      25        115 ipod
+       102 Ramesh                       33        115 ipod
+       103 Suman                        44        115 ipod
+       104 Ramesh                       55        115 ipod
+       106 ABCD                         55        115 ipod
+       107 EFGH                         95        115 ipod
+       112 dgsdgg                       65        115 ipod
+       105 Mohan                        66        115 ipod
+       101 Krishna                      25        116 PC
+       102 Ramesh                       33        116 PC
+       103 Suman                        44        116 PC
+       104 Ramesh                       55        116 PC
+       106 ABCD                         55        116 PC
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       107 EFGH                         95        116 PC
+       112 dgsdgg                       65        116 PC
+       105 Mohan                        66        116 PC
+       101 Krishna                      25        116 dfds
+       102 Ramesh                       33        116 dfds
+       103 Suman                        44        116 dfds
+       104 Ramesh                       55        116 dfds
+       106 ABCD                         55        116 dfds
+       107 EFGH                         95        116 dfds
+       112 dgsdgg                       65        116 dfds
+       105 Mohan                        66        116 dfds
+       101 Krishna                      25        117 dgs
+       102 Ramesh                       33        117 dgs
+       103 Suman                        44        117 dgs
+       104 Ramesh                       55        117 dgs
+       106 ABCD                         55        117 dgs
+       107 EFGH                         95        117 dgs
+       112 dgsdgg                       65        117 dgs
+       105 Mohan                        66        117 dgs
+       101 Krishna                      25        118 dsfsed
+       102 Ramesh                       33        118 dsfsed
+       103 Suman                        44        118 dsfsed
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       104 Ramesh                       55        118 dsfsed
+       106 ABCD                         55        118 dsfsed
+       107 EFGH                         95        118 dsfsed
+       112 dgsdgg                       65        118 dsfsed
+       105 Mohan                        66        118 dsfsed
+
+71 rows selected.
+
+SQL> select s1.sname ,s2.sname from student s1 join student s2 on s1.rollnum=s2.rollnum;
+
+SNAME                SNAME
+-------------------- --------------------
+Krishna              Krishna
+Ramesh               Ramesh
+Suman                Suman
+Ramesh               Ramesh
+ABCD                 ABCD
+EFGH                 EFGH
+dgsdgg               dgsdgg
+Mohan                Mohan
+
+8 rows selected.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       112 dgsdgg                       65      88.33 10-AUG-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+8 rows selected.
+
+SQL> select s1.sname ,s2.sname from student s1 join student s2 on s1.rollnum!=s2.rollnum;
+
+SNAME                SNAME
+-------------------- --------------------
+Krishna              Ramesh
+Krishna              Suman
+Krishna              Ramesh
+Krishna              ABCD
+Krishna              EFGH
+Krishna              dgsdgg
+Krishna              Mohan
+Ramesh               Krishna
+Ramesh               Suman
+Ramesh               Ramesh
+Ramesh               ABCD
+Ramesh               EFGH
+Ramesh               dgsdgg
+Ramesh               Mohan
+Suman                Krishna
+Suman                Ramesh
+Suman                Ramesh
+Suman                ABCD
+Suman                EFGH
+Suman                dgsdgg
+Suman                Mohan
+Ramesh               Krishna
+
+SNAME                SNAME
+-------------------- --------------------
+Ramesh               Ramesh
+Ramesh               Suman
+Ramesh               ABCD
+Ramesh               EFGH
+Ramesh               dgsdgg
+Ramesh               Mohan
+ABCD                 Krishna
+ABCD                 Ramesh
+ABCD                 Suman
+ABCD                 Ramesh
+ABCD                 EFGH
+ABCD                 dgsdgg
+ABCD                 Mohan
+EFGH                 Krishna
+EFGH                 Ramesh
+EFGH                 Suman
+EFGH                 Ramesh
+EFGH                 ABCD
+EFGH                 dgsdgg
+EFGH                 Mohan
+dgsdgg               Krishna
+dgsdgg               Ramesh
+
+SNAME                SNAME
+-------------------- --------------------
+dgsdgg               Suman
+dgsdgg               Ramesh
+dgsdgg               ABCD
+dgsdgg               EFGH
+dgsdgg               Mohan
+Mohan                Krishna
+Mohan                Ramesh
+Mohan                Suman
+Mohan                Ramesh
+Mohan                ABCD
+Mohan                EFGH
+Mohan                dgsdgg
+
+56 rows selected.
+
+SQL> SELECT student.rollnum, student.sNAME, student.AGE, products.pid,products.prod_name FROM student cross JOIN products;
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       101 Krishna                      25        111 Laptap
+       101 Krishna                      25        112 TV
+       101 Krishna                      25        113 mOBILE
+       101 Krishna                      25        114 AC
+       101 Krishna                      25        115 ipod
+       101 Krishna                      25        116 PC
+       101 Krishna                      25        116 dfds
+       101 Krishna                      25        117 dgs
+       101 Krishna                      25        118 dsfsed
+       102 Ramesh                       33        111 Laptap
+       102 Ramesh                       33        112 TV
+       102 Ramesh                       33        113 mOBILE
+       102 Ramesh                       33        114 AC
+       102 Ramesh                       33        115 ipod
+       102 Ramesh                       33        116 PC
+       102 Ramesh                       33        116 dfds
+       102 Ramesh                       33        117 dgs
+       102 Ramesh                       33        118 dsfsed
+       103 Suman                        44        111 Laptap
+       103 Suman                        44        112 TV
+       103 Suman                        44        113 mOBILE
+       103 Suman                        44        114 AC
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       103 Suman                        44        115 ipod
+       103 Suman                        44        116 PC
+       103 Suman                        44        116 dfds
+       103 Suman                        44        117 dgs
+       103 Suman                        44        118 dsfsed
+       104 Ramesh                       55        111 Laptap
+       104 Ramesh                       55        112 TV
+       104 Ramesh                       55        113 mOBILE
+       104 Ramesh                       55        114 AC
+       104 Ramesh                       55        115 ipod
+       104 Ramesh                       55        116 PC
+       104 Ramesh                       55        116 dfds
+       104 Ramesh                       55        117 dgs
+       104 Ramesh                       55        118 dsfsed
+       106 ABCD                         55        111 Laptap
+       106 ABCD                         55        112 TV
+       106 ABCD                         55        113 mOBILE
+       106 ABCD                         55        114 AC
+       106 ABCD                         55        115 ipod
+       106 ABCD                         55        116 PC
+       106 ABCD                         55        116 dfds
+       106 ABCD                         55        117 dgs
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       106 ABCD                         55        118 dsfsed
+       107 EFGH                         95        111 Laptap
+       107 EFGH                         95        112 TV
+       107 EFGH                         95        113 mOBILE
+       107 EFGH                         95        114 AC
+       107 EFGH                         95        115 ipod
+       107 EFGH                         95        116 PC
+       107 EFGH                         95        116 dfds
+       107 EFGH                         95        117 dgs
+       107 EFGH                         95        118 dsfsed
+       112 dgsdgg                       65        111 Laptap
+       112 dgsdgg                       65        112 TV
+       112 dgsdgg                       65        113 mOBILE
+       112 dgsdgg                       65        114 AC
+       112 dgsdgg                       65        115 ipod
+       112 dgsdgg                       65        116 PC
+       112 dgsdgg                       65        116 dfds
+       112 dgsdgg                       65        117 dgs
+       112 dgsdgg                       65        118 dsfsed
+       105 Mohan                        66        111 Laptap
+       105 Mohan                        66        112 TV
+       105 Mohan                        66        113 mOBILE
+
+   ROLLNUM SNAME                       AGE        PID PROD_NAME
+---------- -------------------- ---------- ---------- --------------------
+       105 Mohan                        66        114 AC
+       105 Mohan                        66        115 ipod
+       105 Mohan                        66        116 PC
+       105 Mohan                        66        116 dfds
+       105 Mohan                        66        117 dgs
+       105 Mohan                        66        118 dsfsed
+
+72 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> select * from student;
+
+   ROLLNUM SNAME                       AGE PERCENTAGE DOB
+---------- -------------------- ---------- ---------- ---------
+       101 Krishna                      25      99.99 10-JUL-96
+       102 Ramesh                       33      88.86 25-DEC-96
+       103 Suman                        44      77.93 01-MAY-00
+       104 Ramesh                       55         55 14-FEB-26
+       106 ABCD                         55
+       107 EFGH                         95
+       112 dgsdgg                       65      88.33 10-AUG-26
+       105 Mohan                        66      66.66 30-SEP-02
+
+8 rows selected.
+
+SQL>
