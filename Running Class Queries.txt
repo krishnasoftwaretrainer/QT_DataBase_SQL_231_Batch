@@ -5880,4 +5880,795 @@ SQL> select * from student;
 
 8 rows selected.
 
+=============================
+
+SQL*Plus: Release 11.2.0.2.0 Production on Wed Apr 1 09:13:01 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt231
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PROD2                          TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S1                             TABLE
+S2                             TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S6                             TABLE
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+16 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> select * from products where prod_price>=40000;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       114 AC                        45000
+       116 PC                        55000
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> SELECT * FROM products WHERE PID IN (SELECT PID FROM products WHERE prod_price>=40000) ;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       114 AC                        45000
+       116 dfds
+       116 PC                        55000
+
+SQL> SELECT PID FROM products WHERE prod_price>=40000 ;
+
+       PID
+----------
+       111
+       114
+       116
+
+SQL> SELECT * FROM products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> SELECT * FROM products WHERE PID IN (SELECT PID FROM products WHERE prod_price>=40000) ;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       114 AC                        45000
+       116 dfds
+       116 PC                        55000
+
+SQL> SELECT * FROM products WHERE PID IN (SELECT PID FROM products WHERE prod_price>=20000) and Prod_name IN (SELECT prod_name FROM products WHERE prod_price<=55000);
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       116 PC                        55000
+       118 dsfsed                    30000
+
+SQL> SELECT prod_name FROM products WHERE prod_price<=55000;
+
+PROD_NAME
+--------------------
+TV
+mOBILE
+AC
+ipod
+PC
+dgs
+dsfsed
+
+7 rows selected.
+
+SQL> SELECT PID FROM products WHERE prod_price>=20000;
+
+       PID
+----------
+       111
+       112
+       113
+       114
+       116
+       118
+
+6 rows selected.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> SELECT * FROM products WHERE PID IN (SELECT PID FROM products WHERE prod_price>=20000) and Prod_name IN (SELECT prod_name FROM products WHERE prod_price<=55000);
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       116 PC                        55000
+       118 dsfsed                    30000
+
+SQL> SELECT pid,prod_name FROM products WHERE PID IN (SELECT PID FROM products WHERE prod_price>=20000) and Prod_name IN (SELECT prod_name FROM products WHERE prod_price<=55000);
+
+       PID PROD_NAME
+---------- --------------------
+       112 TV
+       113 mOBILE
+       114 AC
+       116 PC
+       118 dsfsed
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> DELETE FROM products WHERE pid IN (SELECT pid FROM products WHERE prod_price is null);
+
+2 rows deleted.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+7 rows selected.
+
+SQL> SELECT pid FROM products WHERE prod_price is null;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       116 PC                        55000
+       116 dfds
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+9 rows selected.
+
+SQL> SELECT pid FROM products WHERE prod_price is null;
+
+       PID
+----------
+       116
+
+SQL> DELETE FROM products WHERE pid IN (SELECT pid FROM products WHERE prod_price is null);
+
+2 rows deleted.
+
+SQL> select * from products;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       111 Laptap                    65000
+       112 TV                        35000
+       113 mOBILE                    25000
+       114 AC                        45000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+7 rows selected.
+
+SQL> desc s1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUM                                            NUMBER(5)
+ SNAME                                              CHAR(20)
+ AGE                                                NUMBER(3)
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 Krishna                      25
+       102 Ramesh                       33
+       103 Suman                        44
+       104 Ramesh                       55
+       105 Mohan                        66
+       222 safa                        456
+       111 safa                        456
+
+7 rows selected.
+
+SQL> truncate table s1;
+
+Table truncated.
+
+SQL> select * from s1;
+
+no rows selected
+
+SQL> CREATE SEQUENCE rollnum START WITH 101 INCREMENT BY 1;
+
+Sequence created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> INSERT INTO s1 (rollnum, sname,age) VALUES (rollnum.NEXTVAL, 'John',40);
+
+1 row created.
+
+SQL> select * from s1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+
+SQL> CREATE SEQUENCE sid START WITH 5 INCREMENT BY 2;
+
+Sequence created.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+         5 John
+         7 John
+         9 John
+        11 John
+        13 John
+
+7 rows selected.
+
+SQL> SELECT sid.CURRVAL FROM DUAL;
+
+   CURRVAL
+----------
+        13
+
+SQL> SELECT rollnum.CURRVAL FROM DUAL;
+
+   CURRVAL
+----------
+       110
+
+SQL> ALTER SEQUENCE sid INCREMENT BY 3 MAXVALUE 20;
+
+Sequence altered.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+         5 John
+         7 John
+         9 John
+        11 John
+        13 John
+
+7 rows selected.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+         5 John
+         7 John
+         9 John
+        11 John
+        13 John
+        16 John
+
+8 rows selected.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+
+1 row created.
+
+SQL> select * from s2;
+
+       SID SNAME
+---------- ----------
+         1 Krishna
+         2 Krishna
+         5 John
+         7 John
+         9 John
+        11 John
+        13 John
+        16 John
+        19 John
+
+9 rows selected.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John')
+*
+ERROR at line 1:
+ORA-08004: sequence SID.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+
+SQL> SELECT sequence_name FROM user_sequences;
+
+SEQUENCE_NAME
+------------------------------
+ROLLNUM
+SID
+
+SQL> SELECT sequence_name, min_value, max_value, increment_by, last_number FROM user_sequences;
+
+SEQUENCE_NAME                   MIN_VALUE  MAX_VALUE INCREMENT_BY LAST_NUMBER
+------------------------------ ---------- ---------- ------------ -----------
+ROLLNUM                                 1 1.0000E+28            1         121
+SID                                     1         20            3          22
+
+SQL> DROP SEQUENCE sid;
+
+Sequence dropped.
+
+SQL> INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John');
+INSERT INTO s2 (sid,sname) VALUES (sid.NEXTVAL,'John')
+                                   *
+ERROR at line 1:
+ORA-02289: sequence does not exist
+
+
+SQL>
+SQL> rename s1 to s20;
+
+Table renamed.
+
+SQL> select * from s1;
+select * from s1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from s20;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> CREATE SYNONYM stu FOR s20;
+
+Synonym created.
+
+SQL> select * from s20;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select * from stu;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select rollnum as hallticketnum from stu;
+
+HALLTICKETNUM
+-------------
+          101
+          102
+          103
+          104
+          105
+          106
+          107
+          108
+          109
+          110
+
+10 rows selected.
+
+SQL> select rollnum from stu;
+
+   ROLLNUM
+----------
+       101
+       102
+       103
+       104
+       105
+       106
+       107
+       108
+       109
+       110
+
+10 rows selected.
+
+SQL> select * from stu;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select rollnum as hallticketnum,sname as studentname, age as studentage from stu;
+
+HALLTICKETNUM STUDENTNAME          STUDENTAGE
+------------- -------------------- ----------
+          101 John                         40
+          102 John                         40
+          103 John                         40
+          104 John                         40
+          105 John                         40
+          106 John                         40
+          107 John                         40
+          108 John                         40
+          109 John                         40
+          110 John                         40
+
+10 rows selected.
+
+SQL> select * from stu;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> CREATE TABLE stu1 AS SELECT * FROM stu;
+
+Table created.
+
+SQL> select * from stu;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select * from stu1;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> CREATE TABLE stu2 AS SELECT sname,age FROM stu;
+
+Table created.
+
+SQL> select * from stu;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       101 John                         40
+       102 John                         40
+       103 John                         40
+       104 John                         40
+       105 John                         40
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+10 rows selected.
+
+SQL> select * from stu2;
+
+SNAME                       AGE
+-------------------- ----------
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+
+10 rows selected.
+
+SQL> CREATE TABLE stu3 AS SELECT sname,age FROM stu where rollnum>105;
+
+Table created.
+
+SQL> select * from stu3;
+
+SNAME                       AGE
+-------------------- ----------
+John                         40
+John                         40
+John                         40
+John                         40
+John                         40
+
+SQL> CREATE TABLE stu3 AS SELECT * FROM stu where rollnum>105;
+CREATE TABLE stu3 AS SELECT * FROM stu where rollnum>105
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE stu4 AS SELECT * FROM stu where rollnum>105;
+
+Table created.
+
+SQL> select * from stu4;
+
+   ROLLNUM SNAME                       AGE
+---------- -------------------- ----------
+       106 John                         40
+       107 John                         40
+       108 John                         40
+       109 John                         40
+       110 John                         40
+
+SQL> select synonym_name from user_synonyms;
+
+SYNONYM_NAME
+------------------------------
+STU
+
 SQL>
