@@ -6672,3 +6672,693 @@ SYNONYM_NAME
 STU
 
 SQL>
+==================
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Apr 2 09:09:37 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect qt231
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect qt231
+Enter password:
+Connected.
+SQL> SELECT sequence_name FROM user_sequences;
+
+SEQUENCE_NAME
+------------------------------
+ROLLNUM
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PROD2                          TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S2                             TABLE
+S20                            TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S6                             TABLE
+STU                            SYNONYM
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STU4                           TABLE
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+21 rows selected.
+
+SQL> select * from prod2;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+
+SQL> CREATE SEQUENCE pid START WITH 119 INCREMENT BY 1;
+
+Sequence created.
+
+SQL> SELECT sequence_name FROM user_sequences;
+
+SEQUENCE_NAME
+------------------------------
+PID
+ROLLNUM
+
+SQL> iNSERT INTO prod2 (pid, prod_name,prod_price) VALUES (pid.NEXTVAL, 'John',80);
+
+1 row created.
+
+SQL> iNSERT INTO prod2 (pid, prod_name,prod_price) VALUES (pid.NEXTVAL, 'AC',8000);
+
+1 row created.
+
+SQL> iNSERT INTO prod2 (pid, prod_name,prod_price) VALUES (pid.NEXTVAL, 'LapTop',6000);
+
+1 row created.
+
+SQL> select * from prod2;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> iNSERT INTO prod2 (pid, prod_name,prod_price) VALUES (pid.NEXTVAL, 'LapTop',6000);
+
+1 row created.
+
+SQL> select * from prod2;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+       122 LapTop                     6000
+
+9 rows selected.
+
+SQL> CREATE SYNONYM prod3 FOR prod2;
+
+Synonym created.
+
+SQL> select * from prod2;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+       122 LapTop                     6000
+
+9 rows selected.
+
+SQL> select * from prod3;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+       122 LapTop                     6000
+
+9 rows selected.
+
+SQL> select * from prod4;
+select * from prod4
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PROD2                          TABLE
+PROD3                          SYNONYM
+PRODUCTS                       TABLE
+READV1                         VIEW
+S2                             TABLE
+S20                            TABLE
+S3                             TABLE
+S4                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S5                             TABLE
+S6                             TABLE
+STU                            SYNONYM
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STU4                           TABLE
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+22 rows selected.
+
+SQL> rename prod2 to prod4;
+
+Table renamed.
+
+SQL> select * from prod2;
+select * from prod2
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+       122 LapTop                     6000
+
+9 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PROD3                          SYNONYM
+PROD4                          TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S2                             TABLE
+S20                            TABLE
+S3                             TABLE
+S4                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S5                             TABLE
+S6                             TABLE
+STU                            SYNONYM
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STU4                           TABLE
+STUDENT                        TABLE
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+22 rows selected.
+
+SQL> select synonym_name from user_synonyms;
+
+SYNONYM_NAME
+------------------------------
+PROD3
+STU
+
+SQL> select * from prod3;
+select * from prod3
+              *
+ERROR at line 1:
+ORA-00980: synonym translation is no longer valid
+
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+       122 LapTop                     6000
+
+9 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> delete prod4 where pid=122;
+
+1 row deleted.
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                    25000
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> update prod4 set prod_price=1500 where pid=113;
+
+1 row updated.
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> create table prod6(prod1 number(5));
+
+Table created.
+
+SQL> desc prod6;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PROD1                                          NUMBER(5)
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> select pid as product_IT from prod4;
+
+PRODUCT_IT
+----------
+       112
+       113
+       115
+       117
+       118
+       119
+       120
+       121
+
+8 rows selected.
+
+SQL> select pid as product_ID,product_name,price from prod4;
+select pid as product_ID,product_name,price from prod4
+                                      *
+ERROR at line 1:
+ORA-00904: "PRICE": invalid identifier
+
+
+SQL> select pid as product_ID,prod_name as product_name,prod_price as price from prod4;
+
+PRODUCT_ID PRODUCT_NAME              PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> CREATE TABLE prod5 AS SELECT * FROM prod4;
+
+Table created.
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> select * from prod5;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> drop table prod5;
+
+Table dropped.
+
+SQL> select * from prod5;
+select * from prod5
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> CREATE SYNONYM prod5 FOR prod4;
+
+Synonym created.
+
+SQL> select * from prod5;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> select * from prod4;
+
+       PID PROD_NAME            PROD_PRICE
+---------- -------------------- ----------
+       112 TV                        35000
+       113 mOBILE                     1500
+       115 ipod                      15000
+       117 dgs                        3600
+       118 dsfsed                    30000
+       119 John                         80
+       120 AC                         8000
+       121 LapTop                     6000
+
+8 rows selected.
+
+SQL> CREATE TABLE prod7 AS SELECT pid,prod_name FROM prod4;
+
+Table created.
+
+SQL> select * from prod7;
+
+       PID PROD_NAME
+---------- --------------------
+       112 TV
+       113 mOBILE
+       115 ipod
+       117 dgs
+       118 dsfsed
+       119 John
+       120 AC
+       121 LapTop
+
+8 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CHECKV1                        VIEW
+CV1                            VIEW
+MV1                            TABLE
+PROD3                          SYNONYM
+PROD4                          TABLE
+PROD5                          SYNONYM
+PROD6                          TABLE
+PROD7                          TABLE
+PRODUCTS                       TABLE
+READV1                         VIEW
+S2                             TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+S20                            TABLE
+S3                             TABLE
+S4                             TABLE
+S5                             TABLE
+S6                             TABLE
+STU                            SYNONYM
+STU1                           TABLE
+STU2                           TABLE
+STU3                           TABLE
+STU4                           TABLE
+STUDENT                        TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUV1                          VIEW
+V1                             VIEW
+V2                             VIEW
+
+25 rows selected.
+
+SQL> CREATE OR REPLACE TRIGGER prod_upd
+  2  AFTER UPDATE ON prod7
+  3  FOR EACH ROW
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('Update operation performed');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> select * from prod7;
+
+       PID PROD_NAME
+---------- --------------------
+       112 TV
+       113 mOBILE
+       115 ipod
+       117 dgs
+       118 dsfsed
+       119 John
+       120 AC
+       121 LapTop
+
+8 rows selected.
+
+SQL> update prod7 set prod_name='Computer' where pid=117;
+
+1 row updated.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> select * from prod7;
+
+       PID PROD_NAME
+---------- --------------------
+       112 TV
+       113 mOBILE
+       115 ipod
+       117 Computer
+       118 dsfsed
+       119 John
+       120 AC
+       121 LapTop
+
+8 rows selected.
+
+SQL> update prod7 set prod_name='Tab' where pid=118;
+Update operation performed
+
+1 row updated.
+
+SQL> CREATE OR REPLACE TRIGGER prod_delete_trg
+  2  AFTER DELETE ON prod7
+  3  FOR EACH ROW
+  4  BEGIN
+  5  DBMS_OUTPUT.PUT_LINE('Delete operation performed');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> delete prod4 where pid=119;
+
+1 row deleted.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> delete prod4 where pid=119;
+
+0 rows deleted.
+
+SQL> delete prod4 where pid=115;
+
+1 row deleted.
+
+SQL> delete prod7 where pid=119;
+Delete operation performed
+
+1 row deleted.
+
+SQL> show parameter recyclebin;
+ORA-00942: table or view does not exist
+
+
+SQL> ALTER SESSION SET recyclebin = OFF;
+
+Session altered.
+
+SQL> Alter system set recycle bin = on;
+Alter system set recycle bin = on
+                 *
+ERROR at line 1:
+ORA-02065: illegal option for ALTER SYSTEM
+
+
+SQL> show parameter recyclebin;
+ORA-00942: table or view does not exist
+
+
+SQL> drop prod7;
+drop prod7
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table prod7;
+
+Table dropped.
+
+SQL> select * from prod7;
+select * from prod7
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> desc prod7;
+ERROR:
+ORA-04043: object prod7 does not exist
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from prod7;
+select * from prod7
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> flashback table prod7 to before drop;
+flashback table prod7 to before drop
+*
+ERROR at line 1:
+ORA-38305: object not in RECYCLE BIN
+
+
+SQL> select object_name, droptime from dba_recyclebin;
+select object_name, droptime from dba_recyclebin
+                                  *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> purge recyclebin;
+
+Recyclebin purged.
