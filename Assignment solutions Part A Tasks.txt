@@ -1,0 +1,47 @@
+Part A: Tasks:
+T1: Create a database/user named Assignment5.
+Solution:
+SQL> create user Assignment5 identified by Assignment5;
+
+User created.
+
+SQL> connect Assignment5;
+Enter password:
+ERROR:
+ORA-01045: user ASSIGNMENT5 lacks CREATE SESSION privilege; logon denied
+
+SQL> connect / as sysdba;
+Connected.
+SQL> grant all privileges to Assignment5;
+
+Grant succeeded.
+
+SQL> connect Assignment5;
+Enter password:
+Connected.
+
+T2: Create a table Students with the following columns:
+student_id (number, primary key)
+student_name (varchar)
+email (varchar, unique)
+course (varchar)
+fees (number)
+join_date (date)
+
+Solution:
+SQL> create table student(student_id number(10) primary key,student_name varchar(20),email varchar(30) unique,course varchar(10),fees number(8),join_date date);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(10)
+ STUDENT_NAME                                       VARCHAR2(20)
+ EMAIL                                              VARCHAR2(30)
+ COURSE                                             VARCHAR2(10)
+ FEES                                               NUMBER(8)
+ JOIN_DATE                                          DATE
+
+T3: Add a new column phone_number to the Students table.
+Solution:
